@@ -1,6 +1,6 @@
-module.exports = (role) => {
+module.exports = (department) => {
     return (req, res, next) => {
-        if(role === req.user.role){
+        if(department === req.user.department){
             next();
         }else{
             res.status(403).json({message: "Wrong Department"})
