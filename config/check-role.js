@@ -3,7 +3,7 @@ module.exports = (role) => {
         if(role === req.user.role){
             next();
         }else{
-            res.status(403).json({message: "You're not allowed"})
+            res.status(403).json({message: "Wrong Department"})
         }
     };
 }
