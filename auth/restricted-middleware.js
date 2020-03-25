@@ -4,20 +4,26 @@ const secrets = require('../config/secrets.js')
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
 
+  // console.log('Token: ', token);
+  // console.log('Decoded Token: ', decodedToken);
+
+
   if (token) {
     jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
       if (err) {
         //foul play
+        res.status(418).json({message: "Token compromised"})
       } else {
         //token is good
-        req.user = {
-          username: decodedToken.username,
-          department: decodedToken.department
-        };
+        req.user = { 
+          username: decodedToken.username, 
+          department: decodedToken.department  
+        }; 
+        
         next();
       }
     })
   } else {
-    res.status(400).json({ message: 'No credentials provided' });
+    res.status(400).json({ message: 'Token not working' });
   }
 };
